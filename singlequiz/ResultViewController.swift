@@ -145,8 +145,7 @@ class ResultViewController: UIViewController {
                 // println("percentDone: \(percentDone)")
         })
         
-        // Save user result image to Parse, including the user information
-        UserLogged.saveUserInformation()
+        // Save user result image to Parse
         UserLogged.saveUserImageFile(newImageFile)
     }
     

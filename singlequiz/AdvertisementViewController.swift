@@ -134,6 +134,7 @@ class AdvertismentController: NSObject, AdBuddizDelegate{
     
     class func userClickedNSAds () {
         AdvertismentController.alertView.close()
+        UserLogged.adsClicked()
         UserLogged.trackEvent("User Clicked Noonswoon ads")
         openiTunes(NSituneLink)
     }

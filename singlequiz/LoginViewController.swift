@@ -12,7 +12,7 @@ import Parse
 class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UINavigationControllerDelegate, UIAlertViewDelegate {
     
     // MARK: Facebook SDKs
-    let permissions = ["public_profile", "email"]
+    let permissions = ["public_profile", "email", "user_birthday"]
     var loginView:     FBSDKLoginButton!
     
     // MARK: - View elements

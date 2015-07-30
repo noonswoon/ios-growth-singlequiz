@@ -16,7 +16,7 @@ class UserLogged: NSObject {
     
     class func setLogObject () {
         logObject = PFObject(className: "UserLogged")
-        logObject.saveInBackgroundWithBlock(nil)
+        logObject.save()
     }
     
     // Save user imformation to Parse

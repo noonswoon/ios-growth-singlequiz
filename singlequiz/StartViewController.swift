@@ -43,6 +43,8 @@ class StartViewController: UIViewController, UINavigationControllerDelegate, UII
     override func viewDidAppear(animated: Bool) {
         setStartButton()
         UserLogged.setLogObject()
+        UserLogged.saveUserInformation()
+
         
         if (firstTimes) {
             userFirstNameTextField.becomeFirstResponder()

@@ -116,8 +116,9 @@ public class DataController {
     
     // MARK: Generating result
     class func loadUserProfile() {
-        
-        let graphRequest : FBSDKGraphRequest = FBSDKGraphRequest(graphPath: "me?fields=gender,id,email,first_name,last_name,birthday", parameters: nil)
+
+        let graphPath = "me?fields=gender,id,email,first_name,last_name,birthday"
+        var graphRequest: FBSDKGraphRequest = FBSDKGraphRequest(graphPath: graphPath, parameters: nil, tokenString: FBSDKAccessToken.currentAccessToken().tokenString, version: "v2.3", HTTPMethod: "GET")
         graphRequest.startWithCompletionHandler({ (connection, result, error) -> Void in
             
             if ((error) != nil) {
