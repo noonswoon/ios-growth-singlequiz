@@ -30,7 +30,7 @@
     [self initGoogleAnalytic];
     [self initParse:application didFinishLaunchingWithOptions:launchOptions];
     [self initAmazonS3];
-    // [self initFabric];
+    [self initFabric];
     [self setNotification];
     [self setBackgroundImage];
     

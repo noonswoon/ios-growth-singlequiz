@@ -124,7 +124,7 @@ class AdvertismentController: NSObject, AdBuddizDelegate{
         let adsButton = UIButton(frame: frame)
         adsButton.setImage(adsImg, forState: .Normal)
         adsButton.setImage(adsImg, forState: .Highlighted)
-        adsButton.addTarget(self, action: "openiTunes", forControlEvents: UIControlEvents.TouchUpInside)
+        adsButton.addTarget(self, action: "userClickedNSAds", forControlEvents: UIControlEvents.TouchUpInside)
         
         let view = UIView(frame: frame)
         view.addSubview(adsButton)
