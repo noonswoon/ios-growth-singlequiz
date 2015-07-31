@@ -44,18 +44,18 @@ class StartViewController: UIViewController, UINavigationControllerDelegate, UII
         setStartButton()
         UserLogged.setLogObject()
         UserLogged.saveUserInformation()
-
         
         if (firstTimes) {
-            userFirstNameTextField.becomeFirstResponder()
             firstTimes = false
         }
         
         // Should show only after click retry, should not show when user click share and retry
         if (!AdvertismentController.isUserClickShareButton()) {
-            self.view.endEditing(true)
             AdvertismentController.showAds(0)
             AdvertismentController.setUserClickedShare(true)
+        }
+        else {
+            userFirstNameTextField.becomeFirstResponder()
         }
     }
 
