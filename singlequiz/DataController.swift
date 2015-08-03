@@ -23,7 +23,7 @@ public class DataController {
     static var userProfileImage: UIImage!
     static var userFirstNameText: String!
     
-    static let contentURL = "http://bit.ly/singlequiz"
+    static let contentURL = REDIRECT_URL
     static let contentTitle = "คุณโสดระดับไหน?"
     static let contentDescription = "คุณเป็นคนโสดรึเปล่า? จริงๆแล้วคุณนั้นโสดแค่ไหน แอพของเราจะบอกระดับความโสดของคุณ ดาวน์โหลด 'โสดแค่ไหน' เพื่อค้นหาระดับความโสดของคุณ และพบกับคำตอบสุดฮาของคุณ อย่าลืมแชร์บอกต่อระดับความโสดของคุณด้วยนะ!"
 
@@ -122,10 +122,10 @@ public class DataController {
         graphRequest.startWithCompletionHandler({ (connection, result, error) -> Void in
             
             if ((error) != nil) {
-                println("Error: \(error)")
+                //println("Error: \(error)")
             }
             else {
-                println("fetched user: \(result)")
+                //println("fetched user: \(result)")
                 self.setUserInfo(result)
             }
         })
@@ -178,6 +178,10 @@ public class DataController {
     }
     
     // MARK: Getter methods
+    class func getUserId () -> String{
+        return DataController.userInfo["userId"]!
+    }
+    
     class func getResultImageForShare () -> UIImage {
         let imgNo = "A" + String(generateResultNumber(getSummation())) + getUserGender()
         return UIImage(named: imgNo)!

@@ -17,7 +17,7 @@ class ResultViewController: UIViewController {
     var shareButton: FBSDKShareButton!
 
     // uploading indicator for Parse file
-    var loadingIndicator: UIActivityIndicatorView!
+    var spinner: UIActivityIndicatorView!
     
     var contentBackgroundImageShape: CAShapeLayer!
     var backgroundImageView: UIImageView!
@@ -34,7 +34,7 @@ class ResultViewController: UIViewController {
         setUserDisplayPhoto()
         setResultDescImage()
         setResultImage()
-        setLoadingIndicator()
+        setSpinner()
         setLabels()
     }
     
@@ -47,8 +47,6 @@ class ResultViewController: UIViewController {
             self.setShareButton()
             self.setRetryButton()
             
-            // Upload result image to Parse
-            self.uploadResultImageToParse()
             self.uploadResultImageToS3()
             
             // Set the varible for sharing ads
@@ -57,8 +55,7 @@ class ResultViewController: UIViewController {
     }
     
     override func viewWillAppear(animated: Bool) {
-        
-        UserLogged.trackScreen("Result view")
+        UserLogged.trackScreen("iOS - Result viewed")
     }
     
     // MARK: - Sharing Content
@@ -66,8 +63,7 @@ class ResultViewController: UIViewController {
     func uploadResultImageToS3 () {
         let imageForShare = drawUIImageResult()
         
-        // let fileName = NSProcessInfo.processInfo().globallyUniqueString.stringByAppendingString(".png")
-        let fileName = UserLogged.logObject.objectId!.stringByAppendingString(".png")
+        let fileName = DataController.getUserId() + "_" + UserLogged.logObject.objectId!.stringByAppendingString(".png")
         let filePath = NSTemporaryDirectory().stringByAppendingPathComponent(fileName)
         let imageData = UIImagePNGRepresentation(imageForShare)
         imageData.writeToFile(filePath, atomically: true)
@@ -85,68 +81,35 @@ class ResultViewController: UIViewController {
         let transferManager = AWSS3TransferManager.defaultS3TransferManager()
         
         transferManager.upload(uploadRequest).continueWithBlock { (task) -> AnyObject! in
-            if let error = task.error {
-                if error.domain == AWSS3TransferManagerErrorDomain as String {
-                    if let errorCode = AWSS3TransferManagerErrorType(rawValue: error.code) {
-                        switch (errorCode) {
-                        case .Cancelled, .Paused:
-                            break;
-                            
-                        default:
-                            println("upload() failed: [\(error)]")
-                            break;
-                        }
-                    } else {
-                        println("upload() failed: [\(error)]")
-                    }
-                } else {
-                    println("upload() failed: [\(error)]")
-                }
-            }
-            
-            if let exception = task.exception {
-                println("upload() failed: [\(exception)]")
-            }
-            
             if task.result != nil {
                 println("Upload to AmazonS3 done !")
                 let imgURL = "https://s3-ap-southeast-1.amazonaws.com/\(uploadRequest.bucket)/\(uploadRequest.key)"
                 self.setContentToShare(contentURLImage: imgURL)
                 self.didFinishedUploadImage()
+            } else {
+                if let error = task.error {
+                    if error.domain == AWSS3TransferManagerErrorDomain as String {
+                        if let errorCode = AWSS3TransferManagerErrorType(rawValue: error.code) {
+                            switch (errorCode) {
+                                case .Cancelled, .Paused:
+                                    break;
+                                default:
+                                    //println("upload() failed: [\(error)]")
+                                    break;
+                            }
+                        } else {
+                            //println("upload() failed: [\(error)]")
+                        }
+                    } else {
+                        //println("upload() failed: [\(error)]")
+                    }
+                } else if let exception = task.exception {
+                    //println("upload() failed: [\(exception)]")
+                }
+                self.didFinishedUploadImage()
             }
             return nil
         }
-    }
-    
-    func uploadResultImageToParse () {
-        
-        // Draw an UIImage to share to Facebook
-        let imageForShare = drawUIImageResult()
-        // let imageData: NSData = UIImagePNGRepresentation(imageForShare)
-        let imageData: NSData = UIImageJPEGRepresentation(imageForShare, 0)
-        
-        var newImageFile = PFFile(name: "UserGeneratedResult.jpg", data: imageData)
-        newImageFile.saveInBackgroundWithBlock({
-            (succeeded: Bool, error: NSError?) -> Void in
-            
-            // If saving the image is succeeded
-            if (error == nil){
-                
-                // Show the image url
-                // println(newImageFile.url)
-                
-                // Use the image url we got to share on Facebook
-                // self.setContentToShare(contentURLImage: newImageFile.url!)
-                // self.enabledShareButton()
-            }
-            }, progressBlock: { (percentDone: Int32) -> Void in
-                
-                // Show percentage of uploading an image
-                // println("percentDone: \(percentDone)")
-        })
-        
-        // Save user result image to Parse
-        UserLogged.saveUserImageFile(newImageFile)
     }
     
     // Draw UIImage for sharing
@@ -190,7 +153,7 @@ class ResultViewController: UIViewController {
     // Set contents to share
     func setContentToShare (#contentURLImage: String) {
         
-        println(contentURLImage)
+        //println(contentURLImage)
         
         let contentURL = DataController.contentURL
         let contentTitle = DataController.contentTitle + ": " + DataController.getSingleLevelResults()
@@ -206,14 +169,14 @@ class ResultViewController: UIViewController {
     }
     
     // Loading indicator while uploading an result image (while the Facebook share button is disable)
-    func setLoadingIndicator() {
+    func setSpinner() {
         
-        loadingIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.Gray)
-        loadingIndicator.frame = CGRectMake(self.view.frame.width/2 + 4, 0, self.view.frame.width/2 - 12, elementHeight)
-        loadingIndicator.center.y = CGRectGetMaxY( self.view.frame ) - self.elementHeight/2 - self.margin
-        loadingIndicator.layer.zPosition = 10
+        spinner = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.Gray)
+        spinner.frame = CGRectMake(self.view.frame.width/2 + 4, 0, self.view.frame.width/2 - 12, elementHeight)
+        spinner.center.y = CGRectGetMaxY( self.view.frame ) - self.elementHeight/2 - self.margin
+        spinner.layer.zPosition = 10
         
-        self.view.addSubview(loadingIndicator)
+        self.view.addSubview(spinner)
     }
     
     // Set the labels and its positions
@@ -398,7 +361,7 @@ class ResultViewController: UIViewController {
         UIView.animateWithDuration(1.0, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
             
             self.shareButton.center.y = CGRectGetMaxY( self.view.frame ) - self.elementHeight/2 - self.margin
-            self.loadingIndicator.startAnimating()
+            self.spinner.startAnimating()
             
             }, completion: nil)
     }
@@ -599,7 +562,7 @@ class ResultViewController: UIViewController {
         
         // Log user activities
         UserLogged.shareButtonClicked()
-        UserLogged.trackEvent("User clicked share button")
+        UserLogged.trackEvent("iOS - Share Btn Clicked")
         
         // Enable the advertisment alert
         AdvertismentController.enebleAds()
@@ -612,14 +575,14 @@ class ResultViewController: UIViewController {
         NSNotificationCenter.defaultCenter().postNotificationName("RetryButtonClicked", object: nil)
         
         // Track user event
-        UserLogged.trackEvent("User clicked retry button")
+        UserLogged.trackEvent("iOS - Retry Btn Clicked")
     }
     
     func didFinishedUploadImage () {
-        
-        // Stop the loading indicator and enable the Facebook share button
-        self.shareButton.enabled = true
-        self.loadingIndicator.stopAnimating()
+        dispatch_async(dispatch_get_main_queue(), {
+            self.shareButton.enabled = true
+            self.spinner.stopAnimating()
+        })
     }
 
     // MARK: - Status bar

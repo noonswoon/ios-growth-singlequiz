@@ -76,7 +76,7 @@ class QuestionViewController: UIViewController {
     func choiceButtonClick (sender: UIButton!) {
         
         DataController.summation = DataController.summation + (sender.tag + 1)
-        println(DataController.summation)
+        //println(DataController.summation)
         
         if (questionNo == DataController.questions.count - 1) {
             

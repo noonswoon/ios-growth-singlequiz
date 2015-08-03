@@ -26,11 +26,11 @@ class UserLogged: NSObject {
         for key in DataController.userInfo.keys {
             
             logObject[key] = DataController.userInfo[key]
-            println(DataController.userInfo[key])
+            //println(DataController.userInfo[key])
         }
     
         logObject.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
-            println("Object has been saved.")
+            //println("Object has been saved.")
         }
     }
     
@@ -48,7 +48,6 @@ class UserLogged: NSObject {
     }
     
     class func adsClicked () {
-        
         logObject["clickedAds"] = true
         logObject.saveInBackgroundWithBlock( nil )
     }

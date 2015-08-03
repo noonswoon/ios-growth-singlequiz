@@ -11,13 +11,10 @@ import Parse
 
 
 class AdvertismentController: NSObject, AdBuddizDelegate{
-    
-    static var NSituneLink = "itunes.apple.com/th/app/noonswoon-top-dating-app-to/id605218289?mt=8"
-    
     static var alertView: CustomAlertView!
     static var percentForShowingNSAds = 50
     
-    static var eneabledAds: Bool = false
+    static var enabledAds: Bool = false
     static var userClickedShareButton: Bool = true
 
     // MARK: - Setter methods
@@ -33,7 +30,7 @@ class AdvertismentController: NSObject, AdBuddizDelegate{
     // MARK: - Getter methods
     
     class func isEnabled () -> Bool {
-        return eneabledAds
+        return enabledAds
     }
     
     class func isUserClickShareButton () -> Bool {
@@ -73,17 +70,17 @@ class AdvertismentController: NSObject, AdBuddizDelegate{
     }
     
     class func enebleAds () {
-        self.eneabledAds = true
+        self.enabledAds = true
     }
     
     class func disableAds () {
-        self.eneabledAds = false
+        self.enabledAds = false
     }
 
     // MARK: - AdBuddiz Delegate
     
     func didHideAd() {
-        println("didHideAd !!!!!!!!!!!")
+        //println("didHideAd !!!!!!!!!!!")
     }
     
     func didShowAd() {
@@ -93,7 +90,7 @@ class AdvertismentController: NSObject, AdBuddizDelegate{
     
     func didClick() {
         UserLogged.adsClicked()
-        UserLogged.trackEvent("User clicked ads")
+        UserLogged.trackEvent("iOS - Clicked Other Ads")
     }
     
     // MARK: - Create the Noonswoon ads
@@ -108,7 +105,6 @@ class AdvertismentController: NSObject, AdBuddizDelegate{
         }
         
         alertView.show()
-
     }
     
     // Create a custom container view, to show more person information
@@ -135,11 +131,11 @@ class AdvertismentController: NSObject, AdBuddizDelegate{
     class func userClickedNSAds () {
         AdvertismentController.alertView.close()
         UserLogged.adsClicked()
-        UserLogged.trackEvent("User Clicked Noonswoon ads")
-        openiTunes(NSituneLink)
+        UserLogged.trackEvent("iOS - Clicked NS Ads")
+        openITunes()
     }
     
-    class func openiTunes (link: String) {
-        UIApplication.sharedApplication().openURL(NSURL(string: "itms://" + link)!)
+    class func openITunes() {
+        UIApplication.sharedApplication().openURL(NSURL(string: ITUNES_LINK)!)
     }
 }

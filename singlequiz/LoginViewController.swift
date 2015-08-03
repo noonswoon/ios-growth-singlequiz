@@ -37,7 +37,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UINavigat
             self.showAlertMessage()
         }
         else if (FBSDKAccessToken.currentAccessToken() != nil) {
-            println("Current access token: \(FBSDKAccessToken.currentAccessToken().tokenString)")
+            //println("Current access token: \(FBSDKAccessToken.currentAccessToken().tokenString)")
             self.userLoggedIn()
         }
         else {

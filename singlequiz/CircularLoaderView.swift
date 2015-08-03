@@ -18,7 +18,7 @@ class CircularLoaderView: UIView {
             return circlePathLayer.strokeEnd
         }
         set {
-            println("New value \(newValue)")
+            //println("New value \(newValue)")
             if (newValue > 1) {
                 circlePathLayer.strokeEnd = 1
             } else if (newValue < 0) {
