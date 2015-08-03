@@ -276,6 +276,10 @@
 		31A37677A0852D2F2EEB6248 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9F18565E1B6A5ABF00685A56 /* Crashlytics.framework */,
+				9F18565F1B6A5ABF00685A56 /* Fabric.framework */,
+				9F1855861B6A487100685A56 /* AdBuddiz.framework */,
+				9F1855871B6A487100685A56 /* Parse.framework */,
 				9F18559E1B6A4C4E00685A56 /* AdSupport.framework */,
 				9F18559C1B6A4B2500685A56 /* libsqlite3.dylib */,
 				9F18559A1B6A4B1D00685A56 /* libz.dylib */,
@@ -295,7 +299,6 @@
 		9F18553E1B6A476900685A56 = {
 			isa = PBXGroup;
 			children = (
-				9F18565B1B6A4F0700685A56 /* Frameworks */,
 				9F1855491B6A476900685A56 /* singlequiz */,
 				9F1855481B6A476900685A56 /* Products */,
 				A86311727A07138B6BEF3C57 /* Pods */,
@@ -513,17 +516,6 @@
 				9F1856031B6A4D0B00685A56 /* A9m.png */,
 			);
 			path = ShareResultImages;
-			sourceTree = "<group>";
-		};
-		9F18565B1B6A4F0700685A56 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				9F18565E1B6A5ABF00685A56 /* Crashlytics.framework */,
-				9F18565F1B6A5ABF00685A56 /* Fabric.framework */,
-				9F1855861B6A487100685A56 /* AdBuddiz.framework */,
-				9F1855871B6A487100685A56 /* Parse.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		A86311727A07138B6BEF3C57 /* Pods */ = {
