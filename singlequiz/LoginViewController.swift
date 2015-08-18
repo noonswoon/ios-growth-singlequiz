@@ -9,7 +9,7 @@
 import UIKit
 import Parse
 
-class LoginViewController: UIViewController, FBSDKLoginButtonDelegate, UINavigationControllerDelegate, UIAlertViewDelegate {
+class LoginViewController2: UIViewController, FBSDKLoginButtonDelegate, UINavigationControllerDelegate, UIAlertViewDelegate {
     
     // MARK: Facebook SDKs
     let permissions = ["public_profile", "email", "user_birthday"]

@@ -9,7 +9,7 @@
 
 import UIKit
 
-public class SwiftSpinner: UIView {
+@objc public class SwiftSpinner: UIView {
     
     // MARK: - Singleton
     

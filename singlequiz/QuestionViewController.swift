@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class QuestionViewController: UIViewController {
+@objc class QuestionViewController: UIViewController {
     
     // MARK: - Variables
     let margin: CGFloat = 8

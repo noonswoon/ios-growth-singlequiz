@@ -9,7 +9,7 @@
 import Foundation
 import Parse
 
-class UserLogged: NSObject {
+@objc class UserLogged: NSObject {
     
     // MARK: - Parse user logged object
     static var logObject: PFObject!
@@ -18,6 +18,7 @@ class UserLogged: NSObject {
         logObject = PFObject(className: "UserLogged")
         logObject.saveInBackgroundWithBlock(nil)
     }
+    
     
     // Save user imformation to Parse
     class func saveUserInformation () {

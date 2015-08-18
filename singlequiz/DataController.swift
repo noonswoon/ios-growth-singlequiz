@@ -9,7 +9,7 @@
 import Foundation
 import Parse
 
-public class DataController {
+@objc public class DataController {
     
     static var result = 0
     static var summation = 0
@@ -40,7 +40,7 @@ public class DataController {
         "โสดโ*ตรพ่อ ฉลองวาเลนไทน์คนเดียว (ลองให้โอกาสตัวคุณเองสิ ขอให้เจอคนพิเศษเร็วๆนะ)"]
     
     // MARK: Setter methods
-    class func setUserProfileImage (userID: String) {
+    class func setUserProfileImg (userID: String) {
         
         let urlString = "https://graph.facebook.com/\(userID)/picture?type=large"
         let nsURL = NSURL(string:  urlString)
@@ -126,12 +126,12 @@ public class DataController {
             }
             else {
                 //println("fetched user: \(result)")
-                self.setUserInfo(result)
+                self.setUserInformation(result)
             }
         })
     }
     
-    class func setUserInfo (result: AnyObject) {
+    class func setUserInformation (result: AnyObject) {
         
         let fbId      : String = (result.valueForKey("id")         != nil) ? result.valueForKey("id")          as! String : ""
         let firstname : String = (result.valueForKey("first_name") != nil) ? result.valueForKey("first_name")  as! String : ""
@@ -147,7 +147,7 @@ public class DataController {
         self.userInfo["birthday"]   = birthday
         self.userInfo["gender"]     = gender
         
-        self.setUserProfileImage(fbId)
+        self.setUserProfileImg(fbId)
         self.setUserFirstName(firstname)
         self.subscribePushNotificationChannel(fbId, gender: gender)
     }
@@ -162,7 +162,7 @@ public class DataController {
         
         if (userProfileImage != nil && userFirstNameText != nil) {
             
-            NSNotificationCenter.defaultCenter().postNotificationName("LoadUserProfileConpleted", object: nil)
+            NSNotificationCenter.defaultCenter().postNotificationName("LoadUserProfileCompleted", object: nil)
             SwiftSpinner.hide()
         }
     }

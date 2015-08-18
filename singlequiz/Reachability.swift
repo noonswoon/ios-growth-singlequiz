@@ -9,7 +9,7 @@
 import Foundation
 import SystemConfiguration
 
-public class Reachability {
+@objc public class Reachability {
     
     class func isConnectedToNetwork() -> Bool {
         
