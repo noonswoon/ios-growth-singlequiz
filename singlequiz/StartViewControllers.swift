@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class StartViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITextFieldDelegate, UIActionSheetDelegate {
+class StartViewControllers: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITextFieldDelegate, UIActionSheetDelegate {
     
     // MARK: - Variables
     

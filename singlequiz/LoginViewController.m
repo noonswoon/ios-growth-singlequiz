@@ -1,3 +1,4 @@
+
 #import "LoginViewController.h"
 #import <Parse/Parse.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
@@ -5,7 +6,6 @@
 
 #import "singlequiz-Swift.h"
 
-// <UINavigationControllerDelegate, >
 @interface LoginViewController () <FBSDKLoginButtonDelegate, UIAlertViewDelegate>
 @end
 
@@ -13,7 +13,6 @@
 
 #pragma mark - Instance variables
 
-// NSArray *permissions = @[ @"public_profile", @"email", @"user_birthday"];
 NSArray *permissions;
 FBSDKLoginButton *loginButton;
 
@@ -137,7 +136,7 @@ const CGFloat elementHeight = 44;
 }
 
 - (void)loginButtonDidLogOut:(FBSDKLoginButton *)loginButton {
-    
+    // TODO
 }
 
 #pragma mark - Controller

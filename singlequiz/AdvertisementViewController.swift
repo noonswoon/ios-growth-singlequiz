@@ -10,7 +10,7 @@ import Foundation
 import Parse
 
 
-class AdvertismentController: NSObject, AdBuddizDelegate{
+@objc class AdvertismentController: NSObject, AdBuddizDelegate{
     static var alertView: CustomAlertView!
     static var percentForShowingNSAds = 50
     
