@@ -121,6 +121,7 @@
 		9F18565D1B6A528200685A56 /* launchScreen.png in Resources */ = {isa = PBXBuildFile; fileRef = 9F18565C1B6A528200685A56 /* launchScreen.png */; };
 		9F1856601B6A5ABF00685A56 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F18565E1B6A5ABF00685A56 /* Crashlytics.framework */; };
 		9F1856611B6A5ABF00685A56 /* Fabric.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F18565F1B6A5ABF00685A56 /* Fabric.framework */; };
+		9F4730041B86EEE300242641 /* QuestionViewControllers.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F4730031B86EEE300242641 /* QuestionViewControllers.m */; };
 		9F6603F91B85EF2E009C3D4A /* StartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F6603F81B85EF2E009C3D4A /* StartViewController.m */; };
 		9F9497491B83160D00AF68D5 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F9497481B83160D00AF68D5 /* LoginViewController.m */; };
 /* End PBXBuildFile section */
@@ -245,6 +246,8 @@
 		9F18565C1B6A528200685A56 /* launchScreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = launchScreen.png; sourceTree = "<group>"; };
 		9F18565E1B6A5ABF00685A56 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Crashlytics.framework; path = Frameworks/Crashlytics.framework; sourceTree = "<group>"; };
 		9F18565F1B6A5ABF00685A56 /* Fabric.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Fabric.framework; path = Frameworks/Fabric.framework; sourceTree = "<group>"; };
+		9F4730031B86EEE300242641 /* QuestionViewControllers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuestionViewControllers.m; sourceTree = "<group>"; };
+		9F4730051B86EEF000242641 /* QuestionViewControllers.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = QuestionViewControllers.h; sourceTree = "<group>"; };
 		9F6603F81B85EF2E009C3D4A /* StartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StartViewController.m; sourceTree = "<group>"; };
 		9F6603FA1B85EF39009C3D4A /* StartViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StartViewController.h; sourceTree = "<group>"; };
 		9F9497481B83160D00AF68D5 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
@@ -335,6 +338,8 @@
 				9F94974A1B83161C00AF68D5 /* LoginViewController.h */,
 				9F9497481B83160D00AF68D5 /* LoginViewController.m */,
 				9F1855781B6A47D500685A56 /* QuestionViewController.swift */,
+				9F4730051B86EEF000242641 /* QuestionViewControllers.h */,
+				9F4730031B86EEE300242641 /* QuestionViewControllers.m */,
 				9F1855791B6A47D500685A56 /* Reachability.swift */,
 				9F18557A1B6A47D500685A56 /* ResultViewController.swift */,
 				9F18557B1B6A47D500685A56 /* StartViewControllers.swift */,
@@ -738,6 +743,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				9F18565A1B6A4E2C00685A56 /* SukhumvitSet.ttc in Sources */,
+				9F4730041B86EEE300242641 /* QuestionViewControllers.m in Sources */,
+				9F1855811B6A47D500685A56 /* QuestionViewController.swift in Sources */,
 				9F1855801B6A47D500685A56 /* LoginViewController.swift in Sources */,
 				9F18557E1B6A47D500685A56 /* DataController.swift in Sources */,
 				9F6603F91B85EF2E009C3D4A /* StartViewController.m in Sources */,
@@ -753,7 +760,6 @@
 				9F1855821B6A47D500685A56 /* Reachability.swift in Sources */,
 				9F1855851B6A47D500685A56 /* UserLogged.swift in Sources */,
 				9F18557D1B6A47D500685A56 /* AdvertisementViewController.swift in Sources */,
-				9F1855811B6A47D500685A56 /* QuestionViewController.swift in Sources */,
 				9F18554D1B6A476900685A56 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
