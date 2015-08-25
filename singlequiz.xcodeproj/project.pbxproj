@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		6335CC2D729E28B5F0118BAE /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B50DBD33606C3DB0C9194D6D /* libPods.a */; };
+		9F01306F1B8C53E6001E66DC /* Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F01306E1B8C53E6001E66DC /* Extension.m */; };
 		9F18554D1B6A476900685A56 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F18554C1B6A476900685A56 /* main.m */; };
 		9F1855501B6A476900685A56 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 9F18554F1B6A476900685A56 /* AppDelegate.m */; };
 		9F1855531B6A476900685A56 /* singlequiz.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 9F1855511B6A476900685A56 /* singlequiz.xcdatamodeld */; };
@@ -129,6 +130,8 @@
 /* Begin PBXFileReference section */
 		04DEF4F4553BC2E84574798C /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		3BD000CB32E336C0E3B47607 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		9F01306E1B8C53E6001E66DC /* Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Extension.m; sourceTree = "<group>"; };
+		9F0130701B8C5658001E66DC /* Extension.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Extension.h; sourceTree = "<group>"; };
 		9F1855471B6A476900685A56 /* singlequiz.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = singlequiz.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9F18554B1B6A476900685A56 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9F18554C1B6A476900685A56 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -334,6 +337,8 @@
 				9F1855741B6A47D500685A56 /* AdvertisementViewController.swift */,
 				9F1855751B6A47D500685A56 /* DataController.swift */,
 				9F1855761B6A47D500685A56 /* Extension.swift */,
+				9F0130701B8C5658001E66DC /* Extension.h */,
+				9F01306E1B8C53E6001E66DC /* Extension.m */,
 				9F1855771B6A47D500685A56 /* LoginViewController.swift */,
 				9F94974A1B83161C00AF68D5 /* LoginViewController.h */,
 				9F9497481B83160D00AF68D5 /* LoginViewController.m */,
@@ -753,6 +758,7 @@
 				9F18557F1B6A47D500685A56 /* Extension.swift in Sources */,
 				9F1855AA1B6A4CB400685A56 /* SwiftSpinner.swift in Sources */,
 				9F9497491B83160D00AF68D5 /* LoginViewController.m in Sources */,
+				9F01306F1B8C53E6001E66DC /* Extension.m in Sources */,
 				9F1855841B6A47D500685A56 /* StartViewControllers.swift in Sources */,
 				9F1855A81B6A4CB400685A56 /* CircularLoaderView.swift in Sources */,
 				9F1855831B6A47D500685A56 /* ResultViewController.swift in Sources */,
