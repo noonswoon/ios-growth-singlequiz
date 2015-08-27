@@ -12,23 +12,16 @@
 @interface UIColor (Extension)
 
 + (UIColor *) appMainColor;
-
 + (UIColor *) appCreamColor;
-
 + (UIColor *) appBrownColor;
-
 + (UIColor *) appGreenColor;
-
 + (UIColor *) appBlueColor;
 
 @end
 
 @interface UIViewController (Extension)
 
-// Get the size of current device
-+ (NSString *) iPhoneScreenSize;
-
-// Set backgroud image
-+ (void) setBackgroundImageView;
+- (NSString *) iPhoneScreenSize;
+- (void) setBackgroundImageView: (UIView *) view imagePath: (NSString *) imagePath;
 
 @end

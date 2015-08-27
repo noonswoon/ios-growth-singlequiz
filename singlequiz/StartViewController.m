@@ -9,7 +9,6 @@
 #import "StartViewController.h"
 #import "singlequiz-Swift.h"
 
-//class StartViewController: UIViewController, UINavigationControllerDelegate, UIActionSheetDelegate {
 @interface StartViewController () <UITextFieldDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 @end
 

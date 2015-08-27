@@ -79,7 +79,7 @@ const CGFloat elementHeight = 44;
 
 - (void) setNotificationCenter {
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(loadUserProfileCompleted)
+                                             selector:@selector(loadUserProfileCompleted:)
                                                  name:@"LoadUserProfileCompleted"
                                                object:nil];
 }
@@ -141,7 +141,7 @@ const CGFloat elementHeight = 44;
 
 #pragma mark - Controller
 
-- (void) loadUserProfileCompleted {
+- (void) loadUserProfileCompleted:(NSNotification *) notification {
     
     StartViewController *startViewController = [StartViewController alloc];
     startViewController.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;

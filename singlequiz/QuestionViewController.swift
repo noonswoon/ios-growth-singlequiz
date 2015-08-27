@@ -36,7 +36,7 @@ import UIKit
     func generateChoices (position: CGFloat) {
         
         let buttonWidth  : CGFloat = CGRectGetMaxX( self.view.frame ) * 0.75
-        let buttonHeight : CGFloat = (iPhoneScreenSize() == "3.5") ? 60 : 66
+        let buttonHeight : CGFloat = (UIViewController().iPhoneScreenSize() == "3.5") ? 60 : 66
         
         let margin: CGFloat = 8
         let buttonMargin: CGFloat = buttonHeight + margin/3
@@ -88,7 +88,7 @@ import UIKit
                 
                 SwiftSpinner.hide(completion: {
                     
-                    var viewController = ResultViewController()
+                    var viewController = ResultViewControllers()
                     viewController.modalTransitionStyle = UIModalTransitionStyle.FlipHorizontal
                     self.presentViewController(viewController, animated: true, completion: nil)
                 })
@@ -124,11 +124,11 @@ import UIKit
         
         resultImageView = UIImageView(image: image)
         
-        if (iPhoneScreenSize() == "3.5") {
+        if (UIViewController().iPhoneScreenSize() == "3.5") {
             resultImageView.frame = CGRect(x: 0, y: 0, width: CGRectGetMidX(self.view.frame)-30, height: CGRectGetMidX(self.view.frame)-30)
             resultImageView.center.y = CGRectGetMaxY(self.view.frame) * 0.18
         }
-        else if (iPhoneScreenSize() == "4") {
+        else if (UIViewController().iPhoneScreenSize() == "4") {
             resultImageView.frame = CGRect(x: 0, y: 0, width: CGRectGetMidX(self.view.frame)-10, height: CGRectGetMidX(self.view.frame)-10)
             resultImageView.center.y = CGRectGetMaxY(self.view.frame) * 0.18
         }
@@ -158,10 +158,10 @@ import UIKit
         question.textAlignment = NSTextAlignment.Center
         question.text = questionText
         
-        if (iPhoneScreenSize() == "3.5") {
+        if (UIViewController().iPhoneScreenSize() == "3.5") {
             question.center.y = self.view.frame.height * 0.39
         }
-        else if (iPhoneScreenSize() == "4") {
+        else if (UIViewController().iPhoneScreenSize() == "4") {
             question.center.y = self.view.frame.height * 0.40
         }
         
@@ -178,7 +178,7 @@ import UIKit
         
         var yPositionFirstChoice: CGFloat!
         
-        switch iPhoneScreenSize() {
+        switch UIViewController().iPhoneScreenSize() {
             
             case "3.5":
             yPositionFirstChoice = self.view.frame.height * 0.45
@@ -334,10 +334,10 @@ import UIKit
             for (var j=0 ; j<numberOfChoicePerQuestion ; j++) {
                 
                 let choice = choices[i * numberOfChoicePerQuestion + j]
-                questionViewController.addChoices( choice )
+                questionViewController.addChoices(choice)
             }
             
-            questionViewController.setQuestionNumber( i )
+            questionViewController.setQuestionNumber(i)
             questionViewController.setContentBackgroundImageView()
             questionViewController.setQuestionLabel(questions[i])
             questionViewController.setChoicesLabels()

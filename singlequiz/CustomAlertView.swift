@@ -8,11 +8,11 @@
 
 import UIKit
 
-protocol CustomAlertViewDelegate: class {
+@objc protocol CustomAlertViewDelegate: class {
     func customAlertViewButtonTouchUpInside(alertView: CustomAlertView, buttonIndex: Int)
 }
 
-class CustomAlertView: UIView {
+@objc class CustomAlertView: UIView {
     
     var buttonHeight: CGFloat = 44
     var buttonsDividerHeight: CGFloat = 1
