@@ -8,6 +8,8 @@
 
 #import "StartViewController.h"
 #import "singlequiz-Swift.h"
+#import "AdvertisementViewController.h"
+#import "Extension.h"
 
 @interface StartViewController () <UITextFieldDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 @end
@@ -54,10 +56,11 @@
     }
     
     // Should show only after click retry, should not show when user click share and retry
-    if (![AdvertismentController isUserClickShareButton]) {
-        [AdvertismentController showAds:0];
-        [AdvertismentController setUserClickedShare:TRUE];
+    if (![[AdvertisementViewController sharedInstance] isUserClickShareButton]) {
+        [[AdvertisementViewController sharedInstance] showAds:0];
+        [[AdvertisementViewController sharedInstance] setUserClickedShare:TRUE];
     }
+    
     else {
         [userFirstNameTextField becomeFirstResponder];
     }

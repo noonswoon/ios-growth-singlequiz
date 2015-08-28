@@ -9,46 +9,61 @@
 #import <Foundation/Foundation.h>
 #import <AdBuddiz/AdBuddiz.h>
 #import <Parse/Parse.h>
-#import "AdvertisementViewController.h"
 #include <stdlib.h>
+#import "AdvertisementViewController.h"
+#import "settings.h"
+
 
 @interface AdvertisementViewController () <AdBuddizDelegate>
 @end
 
 @implementation AdvertisementViewController : NSObject
 
-CustomAlertView *alertView;
-int percentForShowingNSAds;
+int percentForShowingNSAds = 50;
 
-BOOL enabledAds;
-BOOL userClickedShareButton;
+BOOL enabledAds = true;
+BOOL userClickedShareButton = false;
+
+static AdvertisementViewController *gInstance = NULL;
+
++ (AdvertisementViewController *) sharedInstance {
+    @synchronized(self)
+    {
+        if (gInstance == NULL) {
+            gInstance = [[self alloc] init];
+            [gInstance enebleAds];
+        }
+    }
+    
+    return(gInstance);
+}
 
 // MARK: - Setter methods
 
-+ (void) setDelegate {
+- (void) setDelegate {
     [AdBuddiz setDelegate: [AdvertisementViewController alloc].self];
 }
 
-+ (void) setUserClickedShare: (BOOL) flag {
+- (void) setUserClickedShare: (BOOL) flag {
     userClickedShareButton = flag;
 }
 
 // MARK: - Getter methods
 
-+ (BOOL) isEnabled {
+- (BOOL) isEnabled {
     return enabledAds;
 }
 
-+ (BOOL) isUserClickShareButton {
+- (BOOL) isUserClickShareButton {
     return userClickedShareButton;
 }
     
 // MARK: - Controller methods
 
 // Show the advertisments, it should has a few delays before showing up
-+ (void) showAds: (double) timeDelay {
+- (void) showAds: (double) timeDelay {
     
-    BOOL chance = arc4random_uniform(100) < AdvertismentController.percentForShowingNSAds;
+    BOOL chance = arc4random_uniform(100) < percentForShowingNSAds;
     
     // If the AdBuddiz is not ready to show or the chance of showing are less than expect, show the noonswoon ads
     if (![AdBuddiz isReadyToShowAd] || chance) {
@@ -58,21 +73,20 @@ BOOL userClickedShareButton;
         [self setDelegate];
         [self showAdsBuddiz:timeDelay];
     }
-
 }
 
-+ (void) showNoonswoonAds: (double) timeDelay {
+- (void) showNoonswoonAds: (double) timeDelay {
     
     CGFloat delay = timeDelay * NSEC_PER_SEC;
     NSTimeInterval time = dispatch_time(DISPATCH_TIME_NOW, delay);
     
     dispatch_after(time, dispatch_get_main_queue(), ^{
         
-        [self launchAlertView];
+        // [self launchAlertView];
     });
 }
 
-+ (void) showAdsBuddiz: (double) timeDelay {
+- (void) showAdsBuddiz: (double) timeDelay {
     CGFloat delay = timeDelay * NSEC_PER_SEC;
     NSTimeInterval time = dispatch_time(DISPATCH_TIME_NOW, delay);
     
@@ -82,11 +96,11 @@ BOOL userClickedShareButton;
     });
 }
 
-+ (void) enebleAds {
+- (void) enebleAds {
     enabledAds = true;
 }
 
-+ (void) disableAds {
+- (void) disableAds {
     enabledAds = false;
 }
 
@@ -98,7 +112,7 @@ BOOL userClickedShareButton;
 
 - (void) didShowAd {
     // Disable ads after it shows
-    [AdvertisementViewController disableAds];
+    [self disableAds];
 }
 
 - (void) didClick {
@@ -108,17 +122,17 @@ BOOL userClickedShareButton;
 
 // MARK: - Create the Noonswoon ads
     
-+ (void) launchAlertView {
+- (void) launchAlertView {
         
     CustomAlertView *alertView = [CustomAlertView alloc];
-    alertView.buttonTitles = [NSArray arrayWithObject: @"Cancel"];
-    alertView.containerView = [self createContainerView];
+    alertView.buttonTitles     = [NSArray arrayWithObject: @"Cancel"];
+    alertView.containerView    = [self createContainerView];
     
     [alertView show];
 }
-//
-//    // Create a custom container view, to show more person information
-+ (UIView *) createContainerView {
+
+// Create a custom container view, to show more person information
+- (UIView *) createContainerView {
     
     UIImage *adsImg = [UIImage imageNamed: @"NoonswoonAds"];
     
@@ -135,17 +149,17 @@ BOOL userClickedShareButton;
     UIView *view = [[UIView alloc] initWithFrame: frame];
     [view addSubview: adsButton];
     
-    return view;
+    return [[UIView alloc]initWithFrame:frame];
 }
-//
-+ (void) userClickedNSAds {
+
+- (void) userClickedNSAds {
     // [AdvertisementViewController.alertView close];
     [UserLogged adsClicked];
     [UserLogged trackEvent: @"iOS - Clicked NS Ads"];
     [self openITunes];
 }
-//    
-+ (void) openITunes {
+
+- (void) openITunes {
     NSURL *urlString = [NSURL URLWithString: ITUNES_LINK];
     [[UIApplication sharedApplication] openURL: urlString];
 }

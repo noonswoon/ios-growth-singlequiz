@@ -1,8 +1,17 @@
 
-
 #import "ResultViewControllers.h"
+#import "Extension.h"
+#import "AdvertisementViewController.h"
 #import "singlequiz-Swift.h"
 #import <Parse/Parse.h>
+
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <FBSDKShareKit/FBSDKShareKit.h>
+
+#import <AssetsLibrary/AssetsLibrary.h>
+#import <AWSS3/AWSS3.h>
+
+#import "settings.h"
 
 @interface ResultViewControllers ()
 @end
@@ -19,8 +28,8 @@
     CAShapeLayer *contentBackgroundImageShape;
     UIImageView *backgroundImageView;
 
-    CGFloat margin = 8;
-    CGFloat elementHeight = 44;
+    CGFloat elementMargin;
+    CGFloat resultViewElementHeight;
 
     // MARK: - View lief cycle
 
@@ -28,20 +37,23 @@
     
     self.view.backgroundColor = [UIColor clearColor];
     
-    [[UIViewController alloc] setBackgroundImageView:self.view imagePath: @"main)background2"];
+    elementMargin = 8;
+    resultViewElementHeight = 44;
+    
+    [[UIViewController alloc] setBackgroundImageView:self.view imagePath: @"main_background2"];
 
     [self setUserDisplayPhoto];;
     [self setResultDescImage];
     [self setResultImage];
     [self setSpinner];
     [self setLabels];
-    
-    }
+}
 
 - (void)viewDidAppear:(BOOL)animated {
         
     // The ads should be disabled when this will is presented
-    if ([AdvertismentController isEnabled]) {
+    [AdvertisementViewController sharedInstance];
+    if ([[AdvertisementViewController sharedInstance] isEnabled]) {
             
         // Show the buttons up by animation
         [self setShareButton];
@@ -49,7 +61,7 @@
         [self uploadResultImageToS3];
         
         // Set the varible for sharing ads
-        [AdvertismentController setUserClickedShare:false];
+        [[AdvertisementViewController sharedInstance] setUserClickedShare:false];
     }
 }
 
@@ -62,12 +74,13 @@
 // MARK: - Sharing Content
     
 - (void) uploadResultImageToS3 {
+    
     UIImage *imageForShare = [self drawUIImageResult];
     
-    NSDateFormatter *formatter = [NSDateFormatter alloc];
-    formatter.dateFormat = @"yyyyMMddHHmmss";
-    formatter.timeZone = [NSTimeZone timeZoneForSecondsFromGMT: 0];
-    NSString *timestamp = [formatter stringFromDate: [NSDate alloc]];
+    NSDateFormatter *formatter = [[NSDateFormatter alloc]init];
+    [formatter setDateFormat:@"yyyyMMddHHmmss"];
+    [formatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT: 0]];
+    NSString *timestamp = [formatter stringFromDate: [[NSDate alloc] init]];
     
     NSString *fileName = [NSString stringWithFormat:@"%@_%@.png", [DataController getUserId], timestamp];
     NSString *filePath = [NSTemporaryDirectory() stringByAppendingString: fileName];
@@ -79,6 +92,9 @@
     uploadRequest.bucket = S3_BUCKET_NAME;
     uploadRequest.body = [NSURL fileURLWithPath: filePath];
     
+    NSLog(@"F_NAME: %@", uploadRequest.key);
+    NSLog(@"F_PATH: %@", uploadRequest.body);
+    
     [self upload:uploadRequest];
 }
 
@@ -86,28 +102,20 @@
     
     AWSS3TransferManager *transferManager = [AWSS3TransferManager defaultS3TransferManager];
     [[transferManager upload:uploadRequest] continueWithBlock:^id(AWSTask *task) {
-        if (task.result) {
-            NSString *imgURL = @"https://s3-ap-southeast-1.amazonaws.com/\(uploadRequest.bucket)/\(uploadRequest.key)";
-            [self setContentToShare:imgURL];
-            [self didFinishUploadImage];
-        }
-        else {
-            if (task.error) {
-                if ([task.error.domain isEqualToString:AWSS3TransferManagerErrorDomain]) {
-                    switch (task.error.code) {
-                        case AWSS3TransferManagerErrorCancelled:
-                        default:
-                            NSLog(@"Upload failed: [%@]", task.error);
-                            break;
-                    }
-                } else {
-                    NSLog(@"Upload failed: [%@]", task.error);
-                }
-            }
-            [self didFinishUploadImage];
+        if (task.error != nil) {
+            NSLog(@"Upload failed: %@", task.error);
+        } else {
+            
+            
+            dispatch_async(dispatch_get_main_queue(), ^(void){
+                NSString *imgURL = @"https://s3-ap-southeast-1.amazonaws.com/\(uploadRequest.bucket)/\(uploadRequest.key)";
+                [self setContentToShare:imgURL];
+                [self didFinishUploadImage];
+            });
         }
         return nil;
     }];
+    
 }
 
 // Draw UIImage for sharing
@@ -171,8 +179,8 @@
 - (void) setSpinner {
     
     spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle: UIActivityIndicatorViewStyleGray];
-    spinner.frame = CGRectMake(self.view.frame.size.width/2 + 4, 0, self.view.frame.size.width/2 - 12, elementHeight);
-    spinner.center = CGPointMake(spinner.center.x, CGRectGetMaxY( self.view.frame ) - elementHeight/2 - margin);
+    spinner.frame = CGRectMake(self.view.frame.size.width/2 + 4, 0, self.view.frame.size.width/2 - 12, resultViewElementHeight);
+    spinner.center = CGPointMake(spinner.center.x, CGRectGetMaxY( self.view.frame ) - resultViewElementHeight/2 - elementMargin);
     spinner.layer.zPosition = 10;
     
     [self.view addSubview: spinner];
@@ -189,12 +197,11 @@
     // Set the position for any screen size
     if ([[[UIViewController alloc] iPhoneScreenSize] isEqual: @"3.5"]) {
         [self setLabel:title     yPosition: frameHeight * 0.05 size: 23];
-        [self setLabel:firstName yPosition:frameHeight * 0.10 size: 21];
+        [self setLabel:firstName yPosition: frameHeight * 0.10 size: 21];
     }
     else {
-        
         [self setLabel:title     yPosition: frameHeight * 0.07 size: 24];
-        [self setLabel:firstName yPosition:frameHeight * 0.12 size: 22];
+        [self setLabel:firstName yPosition: frameHeight * 0.12 size: 22];
     }
 }
 
@@ -207,7 +214,6 @@
     label.textColor = [UIColor appBrownColor];
     label.text = title;
     label.center = CGPointMake(label.center.x, yPosition);
-    [label sizeToFit];
     
     [self.view addSubview: label];
 }
@@ -277,7 +283,7 @@
 
 - (void) setContentBackgroundTemplate {
     
-    CGFloat templateMargin = margin + 6;
+    CGFloat templateMargin = elementMargin + 6;
     CGFloat statusBarHeight = 20;
     CGFloat topMargin = statusBarHeight + templateMargin + 3;
     
@@ -304,12 +310,12 @@
     // defind the top margin
     
     CGFloat statusBarHeight = 20;
-    CGFloat topMargin = statusBarHeight + margin;
+    CGFloat topMargin = statusBarHeight + elementMargin;
     
     // Create a shape
     
     CAShapeLayer *contentBackgroundImageShape = [CAShapeLayer alloc];
-    contentBackgroundImageShape.frame = CGRectMake(margin, topMargin, self.view.frame.size.width - margin * 2, self.view.frame.size.height - ( margin * 2 + topMargin) - elementHeight);
+    contentBackgroundImageShape.frame = CGRectMake(elementMargin, topMargin, self.view.frame.size.width - elementMargin * 2, self.view.frame.size.height - ( elementMargin * 2 + topMargin) - resultViewElementHeight);
     contentBackgroundImageShape.path = [UIBezierPath bezierPathWithRoundedRect: contentBackgroundImageShape.bounds cornerRadius: 6 ].CGPath;
     contentBackgroundImageShape.fillColor = [UIColor appCreamColor].CGColor;
     contentBackgroundImageShape.strokeColor = [UIColor grayColor].CGColor;
@@ -319,14 +325,14 @@
     
     CGFloat yPosition = topMargin + 30;
     CAShapeLayer *line = [CAShapeLayer alloc];
-    line.frame = CGRectMake(margin, yPosition, self.view.frame.size.width - margin * 2, 1);
+    line.frame = CGRectMake(elementMargin, yPosition, self.view.frame.size.width - elementMargin * 2, 1);
     line.path = [UIBezierPath bezierPathWithRoundedRect: line.bounds cornerRadius: 6 ].CGPath;
     line.strokeColor = [UIColor lightGrayColor].CGColor;
     line.lineWidth = 0.3;
     
     while (yPosition < contentBackgroundImageShape.frame.size.height) {
         CAShapeLayer *line = [CAShapeLayer alloc];
-        line.frame = CGRectMake(margin - 16, yPosition, contentBackgroundImageShape.frame.size.width * 0.9, 1);
+        line.frame = CGRectMake(elementMargin - 16, yPosition, contentBackgroundImageShape.frame.size.width * 0.9, 1);
         line.position = CGPointMake(contentBackgroundImageShape.position.x, line.position.y);
         line.path = [UIBezierPath bezierPathWithRoundedRect: line.bounds cornerRadius: 6 ].CGPath;
         line.fillColor = [UIColor clearColor].CGColor;
@@ -340,10 +346,10 @@
 
 - (void) setShareButton {
     
-    shareButton = [[FBSDKShareButton alloc] initWithFrame: CGRectMake(self.view.frame.size.width/2 + 4, 0, self.view.frame.size.width/2 - 12, elementHeight)];
+    shareButton = [[FBSDKShareButton alloc] initWithFrame: CGRectMake(self.view.frame.size.width/2 + 4, 0, self.view.frame.size.width/2 - 12, resultViewElementHeight)];
     shareButton.enabled = false;
     // The y position should be animated
-    shareButton.center = CGPointMake(shareButton.center.x, CGRectGetMaxY(self.view.frame) + elementHeight/2 + margin);
+    shareButton.center = CGPointMake(shareButton.center.x, CGRectGetMaxY(self.view.frame) + resultViewElementHeight/2 + elementMargin);
     shareButton.layer.cornerRadius = 6;
     shareButton.layer.masksToBounds = true;
     [shareButton addTarget:self action:@selector(shareButtonClicked) forControlEvents:UIControlEventTouchUpInside];
@@ -355,19 +361,19 @@
     
     // Show button up with animation
     [UIView animateWithDuration:1 delay:0 options:UIViewAnimationOptionCurveEaseOut animations: ^(void){
-        shareButton.center = CGPointMake(shareButton.center.x, CGRectGetMaxY(self.view.frame) - elementHeight/2 - margin);
+        shareButton.center = CGPointMake(shareButton.center.x, CGRectGetMaxY(self.view.frame) - resultViewElementHeight/2 - elementMargin);
         [spinner startAnimating];
     } completion:nil];
 }
 
 - (void) setRetryButton {
     
-    UIButton *retryButton = [[UIButton alloc] initWithFrame: CGRectMake(8, 0, self.view.frame.size.width/2 - 12, elementHeight)];
+    UIButton *retryButton = [[UIButton alloc] initWithFrame: CGRectMake(8, 0, self.view.frame.size.width/2 - 12, resultViewElementHeight)];
     [retryButton setTitle:@"เล่นใหม่" forState: UIControlStateNormal];
     retryButton.titleLabel.font = [UIFont fontWithName:@"SukhumvitSet-Medium" size: 18];
     retryButton.enabled = true;
     // The y position should be animated
-    retryButton.center = CGPointMake(retryButton.center.x, CGRectGetMaxY( self.view.frame ) + elementHeight/2 + margin);
+    retryButton.center = CGPointMake(retryButton.center.x, CGRectGetMaxY( self.view.frame ) + resultViewElementHeight/2 + elementMargin);
     [retryButton addTarget:self action: @selector(retryButtonClicked) forControlEvents:UIControlEventTouchUpInside];
     retryButton.backgroundColor = [UIColor appGreenColor];
     retryButton.layer.cornerRadius = 6;
@@ -378,7 +384,7 @@
     
     // Show up animation
     [UIView animateWithDuration:1 delay:0 options:UIViewAnimationOptionTransitionNone animations: ^(void){
-        retryButton.center = CGPointMake(retryButton.center.x, CGRectGetMaxY( self.view.frame ) - elementHeight/2 - margin);
+        retryButton.center = CGPointMake(retryButton.center.x, CGRectGetMaxY( self.view.frame ) - resultViewElementHeight/2 - elementMargin);
     } completion:nil];
 }
 
@@ -495,8 +501,8 @@
     [UserLogged trackEvent:@"iOS - Share Btn Clicked"];
         
     // Enable the advertisment alert
-    [AdvertismentController enabledAds];
-    [AdvertismentController setUserClickedShare:true];
+    [[AdvertisementViewController sharedInstance] enabledAds];
+    [[AdvertisementViewController sharedInstance] setUserClickedShare:true];
 }
 
 - (void) retryButtonClicked {
@@ -507,7 +513,7 @@
     // Track user event
     [UserLogged trackEvent: @"iOS - Retry Btn Clicked"];
 }
-//
+
 - (void) didFinishUploadImage {
     dispatch_async(dispatch_get_main_queue(), ^(void){
         shareButton.enabled = true;

@@ -351,7 +351,6 @@ import UIKit
     class func getStartedQuestion (rootView: UIViewController) {
         
         DataController.summation = DataController.result
-        //AdvertismentController.disableAds()
         
         let timeDelay: Double = 0
         let delay = timeDelay * Double(NSEC_PER_SEC)

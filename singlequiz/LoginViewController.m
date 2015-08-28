@@ -1,5 +1,6 @@
 
 #import "LoginViewController.h"
+#import "StartViewController.h"
 #import <Parse/Parse.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import <FBSDKCoreKit/FBSDKCoreKit.h>

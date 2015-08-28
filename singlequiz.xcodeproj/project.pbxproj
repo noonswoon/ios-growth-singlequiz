@@ -15,13 +15,11 @@
 		9F1855591B6A476900685A56 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9F1855571B6A476900685A56 /* Main.storyboard */; };
 		9F18555B1B6A476900685A56 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9F18555A1B6A476900685A56 /* Images.xcassets */; };
 		9F18555E1B6A476900685A56 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9F18555C1B6A476900685A56 /* LaunchScreen.xib */; };
-		9F18557D1B6A47D500685A56 /* AdvertisementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1855741B6A47D500685A56 /* AdvertisementViewController.swift */; };
 		9F18557E1B6A47D500685A56 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1855751B6A47D500685A56 /* DataController.swift */; };
 		9F18557F1B6A47D500685A56 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1855761B6A47D500685A56 /* Extension.swift */; };
 		9F1855801B6A47D500685A56 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1855771B6A47D500685A56 /* LoginViewController.swift */; };
 		9F1855811B6A47D500685A56 /* QuestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1855781B6A47D500685A56 /* QuestionViewController.swift */; };
 		9F1855821B6A47D500685A56 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1855791B6A47D500685A56 /* Reachability.swift */; };
-		9F1855831B6A47D500685A56 /* ResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F18557A1B6A47D500685A56 /* ResultViewController.swift */; };
 		9F1855841B6A47D500685A56 /* StartViewControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F18557B1B6A47D500685A56 /* StartViewControllers.swift */; };
 		9F1855851B6A47D500685A56 /* UserLogged.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F18557C1B6A47D500685A56 /* UserLogged.swift */; };
 		9F1855881B6A487100685A56 /* AdBuddiz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9F1855861B6A487100685A56 /* AdBuddiz.framework */; };
@@ -143,13 +141,11 @@
 		9F18555A1B6A476900685A56 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		9F18555D1B6A476900685A56 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		9F1855731B6A47D500685A56 /* singlequiz-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "singlequiz-Bridging-Header.h"; sourceTree = "<group>"; };
-		9F1855741B6A47D500685A56 /* AdvertisementViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdvertisementViewController.swift; sourceTree = "<group>"; };
 		9F1855751B6A47D500685A56 /* DataController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
 		9F1855761B6A47D500685A56 /* Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		9F1855771B6A47D500685A56 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		9F1855781B6A47D500685A56 /* QuestionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuestionViewController.swift; sourceTree = "<group>"; };
 		9F1855791B6A47D500685A56 /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
-		9F18557A1B6A47D500685A56 /* ResultViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultViewController.swift; sourceTree = "<group>"; };
 		9F18557B1B6A47D500685A56 /* StartViewControllers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartViewControllers.swift; sourceTree = "<group>"; };
 		9F18557C1B6A47D500685A56 /* UserLogged.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserLogged.swift; sourceTree = "<group>"; };
 		9F1855861B6A487100685A56 /* AdBuddiz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdBuddiz.framework; path = Frameworks/AdBuddiz.framework; sourceTree = "<group>"; };
@@ -337,7 +333,6 @@
 				9F1855AB1B6A4D0B00685A56 /* Resources */,
 				9F18554E1B6A476900685A56 /* AppDelegate.h */,
 				9F18554F1B6A476900685A56 /* AppDelegate.m */,
-				9F1855741B6A47D500685A56 /* AdvertisementViewController.swift */,
 				9F0130AB1B8CAC5D001E66DC /* AdvertisementViewController.h */,
 				9F0130A91B8CAC4D001E66DC /* AdvertisementViewController.m */,
 				9F1855751B6A47D500685A56 /* DataController.swift */,
@@ -349,7 +344,6 @@
 				9F9497481B83160D00AF68D5 /* LoginViewController.m */,
 				9F1855781B6A47D500685A56 /* QuestionViewController.swift */,
 				9F1855791B6A47D500685A56 /* Reachability.swift */,
-				9F18557A1B6A47D500685A56 /* ResultViewController.swift */,
 				9F2DE3031B8DDBE100282BA2 /* ResultViewControllers.h */,
 				9F2DE3041B8DDBF200282BA2 /* ResultViewControllers.m */,
 				9F18557B1B6A47D500685A56 /* StartViewControllers.swift */,
@@ -767,11 +761,9 @@
 				9F2DE3011B8DD27000282BA2 /* Extension.m in Sources */,
 				9F1855841B6A47D500685A56 /* StartViewControllers.swift in Sources */,
 				9F1855A81B6A4CB400685A56 /* CircularLoaderView.swift in Sources */,
-				9F1855831B6A47D500685A56 /* ResultViewController.swift in Sources */,
 				9F1855A91B6A4CB400685A56 /* CustomAlertView.swift in Sources */,
 				9F1855821B6A47D500685A56 /* Reachability.swift in Sources */,
 				9F1855851B6A47D500685A56 /* UserLogged.swift in Sources */,
-				9F18557D1B6A47D500685A56 /* AdvertisementViewController.swift in Sources */,
 				9F18554D1B6A476900685A56 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
