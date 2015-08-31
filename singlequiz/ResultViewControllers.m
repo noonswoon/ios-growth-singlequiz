@@ -92,9 +92,6 @@
     uploadRequest.bucket = S3_BUCKET_NAME;
     uploadRequest.body = [NSURL fileURLWithPath: filePath];
     
-    NSLog(@"F_NAME: %@", uploadRequest.key);
-    NSLog(@"F_PATH: %@", uploadRequest.body);
-    
     [self upload:uploadRequest];
 }
 
@@ -106,9 +103,9 @@
             NSLog(@"Upload failed: %@", task.error);
         } else {
             
-            
             dispatch_async(dispatch_get_main_queue(), ^(void){
-                NSString *imgURL = @"https://s3-ap-southeast-1.amazonaws.com/\(uploadRequest.bucket)/\(uploadRequest.key)";
+                NSString *urlFormat = [NSString stringWithFormat: @"https://s3-ap-southeast-1.amazonaws.com/%@/%@", uploadRequest.bucket, uploadRequest.key];
+                NSString *imgURL = urlFormat;
                 [self setContentToShare:imgURL];
                 [self didFinishUploadImage];
             });
@@ -394,6 +391,7 @@
 
 -(UIImage *) setText: (NSString*) drawText fontSize: (CGFloat) fontSize inImage: (UIImage*) inImage atPoint: (CGPoint) atPoint {
     
+    // WILL BE FIXED
     // Setup the font specific variables
     UIColor *textColor = [UIColor whiteColor];
     UIFont *textFont   =  [UIFont fontWithName:@"SukhumvitSet-Medium" size:fontSize];
@@ -401,6 +399,7 @@
     //Setup the image context using the passed image.
     UIGraphicsBeginImageContext(inImage.size);
     
+    // WILL BE FIXED
     // Setups up the font attributes that will be later used to dictate how the text should be drawn
     // NSDictionary *textFontAttributes = [ NSFontAttributeName: textFont, NSForegroundColorAttributeName: textColor, ];
     
