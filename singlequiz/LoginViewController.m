@@ -78,6 +78,7 @@ const CGFloat elementHeight = 44;
 // Set the question to user for generating result
 - (void) setQuestionViewController {
     [[DataController sharedInstance] setQuestionAndChoice];
+    NSLog(@"%lu", (unsigned long)[DataController sharedInstance].choicesList.count);
     [QuestionViewController setQuestionViewControllers];
 }
 

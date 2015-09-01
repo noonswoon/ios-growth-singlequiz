@@ -230,7 +230,7 @@ NSMutableArray *choicesList;
     NSArray *questions   = [DataController sharedInstance].questions;
     NSArray *choicesList = [DataController sharedInstance].choicesList;
     
-    NSLog(@"%d", [DataController sharedInstance].choicesList.count);
+    NSLog(@"%@", [DataController sharedInstance].choicesList.count);
     
     CGFloat numberOfChoicePerQuestion = [DataController sharedInstance].choicesList.count / [DataController sharedInstance].questions.count;
     CGFloat numberOfQuestion = [DataController sharedInstance].questions.count;

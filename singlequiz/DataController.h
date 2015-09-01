@@ -28,7 +28,7 @@
 
 @property NSMutableArray *singleLevelResults;
 
-+ (DataController *) sharedInstance;
++ (id) sharedInstance;
 - (NSString *) getUserId;
 - (UIImage *)  getResultImage;
 - (UIImage *)  getResultImageForShare;

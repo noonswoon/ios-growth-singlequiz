@@ -22,8 +22,10 @@ import Parse
     
     // Save user imformation to Parse
     class func saveUserInformation () {
+
+// NEED TO FIXES
         
-        // fetching all of the user information
+// fetching all of the user information
 //        for key in DataController.userInfo.keys {
 //            
 //            logObject[key] = DataController.userInfo[key]
