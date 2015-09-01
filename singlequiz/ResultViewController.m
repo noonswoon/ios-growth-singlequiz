@@ -1,22 +1,22 @@
-
-#import "ResultViewControllers.h"
-#import "Extension.h"
-#import "AdvertisementViewController.h"
-#import "singlequiz-Swift.h"
 #import <Parse/Parse.h>
-
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKShareKit/FBSDKShareKit.h>
-
 #import <AssetsLibrary/AssetsLibrary.h>
 #import <AWSS3/AWSS3.h>
 
+#import "ResultViewController.h"
+#import "AdvertisementViewController.h"
+#import "DataController.h"
+
+#import "Extension.h"
 #import "settings.h"
 
-@interface ResultViewControllers ()
+#import "singlequiz-Swift.h"
+
+@interface ResultViewController ()
 @end
 
-@implementation ResultViewControllers
+@implementation ResultViewController
     
     // MARK: - Variables
     
@@ -82,7 +82,7 @@
     [formatter setTimeZone:[NSTimeZone timeZoneForSecondsFromGMT: 0]];
     NSString *timestamp = [formatter stringFromDate: [[NSDate alloc] init]];
     
-    NSString *fileName = [NSString stringWithFormat:@"%@_%@.png", [DataController getUserId], timestamp];
+    NSString *fileName = [NSString stringWithFormat:@"%@_%@.png", [DataController sharedInstance].getUserId, timestamp];
     NSString *filePath = [NSTemporaryDirectory() stringByAppendingString: fileName];
     NSData *imageData  = UIImagePNGRepresentation(imageForShare);
     [imageData writeToFile:filePath atomically:true];
@@ -99,7 +99,7 @@
     
     AWSS3TransferManager *transferManager = [AWSS3TransferManager defaultS3TransferManager];
     [[transferManager upload:uploadRequest] continueWithBlock:^id(AWSTask *task) {
-        if (task.error != nil) {
+        if (task.error) {
             NSLog(@"Upload failed: %@", task.error);
         } else {
             
@@ -108,6 +108,7 @@
                 NSString *imgURL = urlFormat;
                 [self setContentToShare:imgURL];
                 [self didFinishUploadImage];
+                NSLog(@"Upload succeed");
             });
         }
         return nil;
@@ -123,13 +124,13 @@
     CGSize rectSize = CGSizeMake(470, 246);
     
     // Because it is an UIImage, we cannot use alpha method, we have to use image outside
-    UIImage *background = [DataController getResultImageForShare];
+    UIImage *background = [DataController sharedInstance].getResultImageForShare;
     
     // There are some problems I cannot solve when the user display image is not squre
     // I just fix that by snap the image from ResultViewController
     
     CGSize displaySize = CGSizeMake(53, 53);
-    UIImage *display = DataController.userProfileImage;
+    UIImage *display = [DataController sharedInstance].userProfileImage;
     display = [self circleImageFromImage: display size: displaySize];
     
     UIGraphicsBeginImageContext(rectSize);
@@ -144,7 +145,7 @@
     UIGraphicsEndImageContext();
     
     // Drawing text into image
-    NSString *textName = [NSString stringWithFormat:@"ระดับความโสดของ %@", DataController.userFirstNameText];
+    NSString *textName = [NSString stringWithFormat:@"ระดับความโสดของ %@", [DataController sharedInstance].userFirstNameText];
     finalImage = [self setText:textName fontSize:25 inImage:finalImage atPoint:CGPointMake(rectSize.width*0.17, 15)];
     
     // Save image into album, use this method if you don't want to check it on Parse or Facebook
@@ -159,9 +160,9 @@
     
     //println(contentURLImage)
     
-    NSString *contentURLStr = DataController.contentURL;
-    NSString *contentTitle = [NSString stringWithFormat:@"%@: %@", DataController.contentTitle, [DataController getSingleLevelResults]];
-    NSString *contentDescription = DataController.contentDescription;
+    NSString *contentURLStr = [DataController sharedInstance].contentURL;
+    NSString *contentTitle = [NSString stringWithFormat:@"%@: %@", [DataController sharedInstance].contentTitle, [[DataController sharedInstance] getSingleLevelResults]];
+    NSString *contentDescription = [DataController sharedInstance].contentDescription;
     
     FBSDKShareLinkContent *content = [FBSDKShareLinkContent alloc];
     content.imageURL           = [[NSURL alloc] initWithString:imageURLStr];
@@ -188,7 +189,7 @@
 - (void) setLabels {
     
     NSString *title     = @"ระดับความโสดของ";
-    NSString *firstName = DataController.userFirstNameText;
+    NSString *firstName = [DataController sharedInstance].userFirstNameText;
     CGFloat frameHeight = CGRectGetMaxY(self.view.frame);
     
     // Set the position for any screen size
@@ -217,7 +218,7 @@
 
 - (void) setUserDisplayPhoto {
     
-    UIImageView *userDisplayPhotoView = [[UIImageView alloc] initWithImage:DataController.userProfileImage];
+    UIImageView *userDisplayPhotoView = [[UIImageView alloc] initWithImage:[DataController sharedInstance].userProfileImage];
     
     // Because I calculate the y position from the screen width, and iPhone 3.5" has the screen width the same with iPhone 4"
     // So, we have to identify the 3.5" and 4"
@@ -243,7 +244,7 @@
 
 - (void) setResultImage {
     
-    UIImage *image = [DataController getResultImage];
+    UIImage *image = [[DataController sharedInstance] getResultImage];
     
     UIImageView *resultImageView       = [[UIImageView alloc] initWithImage:image];
     resultImageView.frame              = CGRectMake(0, 0, CGRectGetMidX(self.view.frame)*1.15*1.28,
@@ -266,7 +267,7 @@
 
 - (void) setResultDescImage {
     
-    UIImage *image = [DataController getResultDescImage];
+    UIImage *image = [[DataController sharedInstance] getResultDescImage];
     UIImageView *resultDescImageView = [[UIImageView alloc]initWithImage: image];
     
     resultDescImageView.frame = CGRectMake(0, 0, CGRectGetMidX(self.view.frame)*1.15*1.28, CGRectGetMidX(self.view.frame)*1.15);

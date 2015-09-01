@@ -18,4 +18,6 @@
 #import "settings.h"
 #import "Extension.h"
 #import "StartViewController.h"
-#import "ResultViewControllers.h"
+#import "ResultViewController.h"
+#import "QuestionViewController.h"
+#import "DataController.h"

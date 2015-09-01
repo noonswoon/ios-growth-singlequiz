@@ -1,6 +1,9 @@
 
 #import "LoginViewController.h"
 #import "StartViewController.h"
+#import "QuestionViewController.h"
+#import "DataController.h"
+
 #import <Parse/Parse.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
@@ -74,7 +77,7 @@ const CGFloat elementHeight = 44;
 
 // Set the question to user for generating result
 - (void) setQuestionViewController {
-    [DataController setQuestionAndChoice];
+    [[DataController sharedInstance] setQuestionAndChoice];
     [QuestionViewController setQuestionViewControllers];
 }
 
@@ -108,7 +111,7 @@ const CGFloat elementHeight = 44;
 
 - (void) userLoggedIn {
     [SwiftSpinner show:@"กำลังโหลด\nข้อมูลผู้ใช้" animated:true];
-    [DataController loadUserProfile];
+    [[DataController sharedInstance] loadUserProfile];
 }
 
 #pragma mark - Status Bar Config

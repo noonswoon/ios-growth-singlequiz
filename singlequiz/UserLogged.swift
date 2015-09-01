@@ -24,15 +24,15 @@ import Parse
     class func saveUserInformation () {
         
         // fetching all of the user information
-        for key in DataController.userInfo.keys {
-            
-            logObject[key] = DataController.userInfo[key]
-            //println(DataController.userInfo[key])
-        }
-    
-        logObject.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
-            //println("Object has been saved.")
-        }
+//        for key in DataController.userInfo.keys {
+//            
+//            logObject[key] = DataController.userInfo[key]
+//            //println(DataController.userInfo[key])
+//        }
+//    
+//        logObject.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
+//            //println("Object has been saved.")
+//        }
     }
     
     class func saveUserImageFile (imageFile: PFFile) {

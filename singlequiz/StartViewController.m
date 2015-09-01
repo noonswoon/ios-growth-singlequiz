@@ -7,9 +7,13 @@
 //
 
 #import "StartViewController.h"
-#import "singlequiz-Swift.h"
+#import "QuestionViewController.h"
 #import "AdvertisementViewController.h"
+#import "DataController.h"
+
 #import "Extension.h"
+
+#import "singlequiz-Swift.h"
 
 @interface StartViewController () <UITextFieldDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 @end
@@ -83,8 +87,7 @@
 
 
 - (void) setUserDisplayPhoto {
-
-    profileImageView = [[UIImageView alloc] initWithImage: DataController.userProfileImage];
+    profileImageView = [[UIImageView alloc] initWithImage: [DataController sharedInstance].userProfileImage];
     profileImageView.frame = CGRectMake(0, 0, 150, 150);
     profileImageView.center = CGPointMake( self.view.center.x, self.view.frame.size.height * 0.3);
     profileImageView.contentMode = UIViewContentModeScaleAspectFill;
@@ -155,7 +158,7 @@
 
     userFirstNameTextField = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width - 44, 44)];
     userFirstNameTextField.delegate = self;
-    userFirstNameTextField.text = DataController.userFirstNameText;
+    userFirstNameTextField.text = [DataController sharedInstance].userFirstNameText;
     userFirstNameTextField.font = [UIFont fontWithName: @"SukhumvitSet-Medium" size:18.0];
     userFirstNameTextField.textAlignment = NSTextAlignmentCenter;
     userFirstNameTextField.textColor = [UIColor whiteColor];
@@ -277,8 +280,8 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
 
     // Show the image we picked to profile image view
-    DataController.userProfileImage = info[UIImagePickerControllerOriginalImage];
-    profileImageView.image = DataController.userProfileImage;
+    [DataController sharedInstance].userProfileImage = info[UIImagePickerControllerOriginalImage];
+    profileImageView.image = [DataController sharedInstance].userProfileImage;
     [picker dismissViewControllerAnimated:true completion:nil];
 }
 
@@ -362,7 +365,7 @@
 }
 
 - (void)textFieldDidBeginEditing:(UITextField *)textField {
-    DataController.userFirstNameText = userFirstNameTextField.text;
+    [DataController sharedInstance].userFirstNameText = userFirstNameTextField.text;
 }
 
 @end
